@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+</head>
+<body>
+<div>
+    <div>
+        <button>
+            <a href="/create">Add new employee</a>
+        </button>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <div>
+                        <form action="/sort" method="post">
+                            <button type="submit">Sort by age</button>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form action="/reverse" method="post">
+                            <button type="submit">Sort by age</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div>
+            <h1>Employees List</h1>
+        </div>
+        <div>
+            <table border="1px">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Salary</th>
+                    <th>Branch</th>
+                    <th colspan="2">Action</th>
+                </tr>
+                <tr th:each="e, loop:${list}">
+                    <td>
+                        <a th:href="@{/detail/{id}(id=${e.id})}" th:text="${e.id}"></a>
+                    </td>
+                    <td>
+                        <a th:href="@{/detail/{id}(id=${e.id})}" th:text="${e.name}"></a>
+                    </td>
+                    <td th:text="${e.age}"></td>
+                    <td th:text="${e.salary}"></td>
+                    <td th:text="${e.branch.name}"></td>
+                    <td>
+                        <button>
+                            <a th:href="@{/edit/{id}(id=${e.id})}">Edit</a>
+                        </button>
+                    </td>
+                    <td>
+                        <button>
+                            <a th:href="@{/delete/{id}(id=${e.id})}">Delete</a>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

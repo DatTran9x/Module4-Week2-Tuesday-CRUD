@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee information</title>
+</head>
+<body>
+    <div>
+        <div>
+            <button>
+                <a href="/home">Back to homepage</a>
+            </button>
+        </div>
+        <div>
+            <div>
+                <h1>Employee information</h1>
+            </div>
+            <div>
+                <table th:object="${employee}">
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Salary</th>
+                        <th>Branch</th>
+                    </tr>
+                    <tr>
+                        <td th:text="*{name}"></td>
+                        <td th:text="*{age}"></td>
+                        <td th:text="*{salary}"></td>
+                        <td th:text="*{branch.name}"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
