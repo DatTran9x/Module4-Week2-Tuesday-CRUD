@@ -5,6 +5,8 @@ import main.model.Employee;
 import main.service.IBranchService;
 import main.service.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,10 +22,10 @@ public class MainController {
     IEmployeeService employeeService;
 
     @GetMapping("/home")
-    public ModelAndView home(){
-        List<Employee> list = employeeService.findAll();
+    public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "id") String option){
         ModelAndView mav = new ModelAndView("/homepage");
-        mav.addObject("list",list);
+        mav.addObject("list",employeeService.findAll(PageRequest.of(page,2, Sort.by(option))));
+        mav.addObject("option",option);
         return mav;
     }
 
@@ -78,19 +80,19 @@ public class MainController {
         return mav;
     }
 
-    @PostMapping("/sort")
-    public ModelAndView sort() {
-        List<Employee> list = employeeService.sort();
-        ModelAndView mav = new ModelAndView("/homepage");
-        mav.addObject("list",list);
-        return mav;
-    }
-
-    @PostMapping("/reverse")
-    public ModelAndView reverse(){
-        List<Employee> list = employeeService.reverse();
-        ModelAndView mav = new ModelAndView("/homepage");
-        mav.addObject("list",list);
-        return mav;
-    }
+//    @PostMapping("/sort")
+//    public ModelAndView sort() {
+//        List<Employee> list = employeeService.sort();
+//        ModelAndView mav = new ModelAndView("/homepage");
+//        mav.addObject("list",list);
+//        return mav;
+//    }
+//
+//    @PostMapping("/reverse")
+//    public ModelAndView reverse(){
+//        List<Employee> list = employeeService.reverse();
+//        ModelAndView mav = new ModelAndView("/homepage");
+//        mav.addObject("list",list);
+//        return mav;
+//    }
 }

@@ -11,26 +11,26 @@
             <a href="/create">Add new employee</a>
         </button>
     </div>
-    <div>
-        <table>
-            <tr>
-                <td>
-                    <div>
-                        <form action="/sort" method="post">
-                            <button type="submit">Sort by age</button>
-                        </form>
-                    </div>
-                </td>
-                <td>
-                    <div>
-                        <form action="/reverse" method="post">
-                            <button type="submit">Sort by age</button>
-                        </form>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </div>
+<!--    <div>-->
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <div>-->
+<!--                        <form action="/sort" method="post">-->
+<!--                            <button type="submit">Sort by age</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <div>-->
+<!--                        <form action="/reverse" method="post">-->
+<!--                            <button type="submit">Sort by age</button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
+<!--    </div>-->
     <div>
         <div>
             <h1>Employees List</h1>
@@ -38,11 +38,21 @@
         <div>
             <table border="1px">
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Salary</th>
-                    <th>Branch</th>
+                    <th>
+                        <a href="/home?option=id">#</a>
+                    </th>
+                    <th>
+                        <a href="/home?option=name">Name</a>
+                    </th>
+                    <th>
+                        <a href="/home?option=age">Age</a>
+                    </th>
+                    <th>
+                        <a href="/home?option=salary">Salary</a>
+                    </th>
+                    <th>
+                        <a href="/home?option=branch">Branch</a>
+                    </th>
                     <th colspan="2">Action</th>
                 </tr>
                 <tr th:each="e, loop:${list}">
@@ -64,6 +74,31 @@
                         <button>
                             <a th:href="@{/delete/{id}(id=${e.id})}">Delete</a>
                         </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td>
+                        <div>
+                            <button th:if="${list.hasPrevious()}">
+                                <a th:href="@{/home/(page=${list.number}-1,option=${option})}">Previous</a>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <b th:text="${list.number} + 1"></b>/<b th:text="${list.totalPages}"></b>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <button th:if="${list.hasNext()}">
+                                <a th:href="@{/home/(page=${list.number}+1,option=${option})}">Next</a>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </table>

@@ -3,8 +3,10 @@ package main.service;
 import main.model.Employee;
 import main.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import org.springframework.data.domain.Pageable;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -15,8 +17,8 @@ public class EmployeeService implements IEmployeeService{
     EmployeeRepo employeeRepo;
 
     @Override
-    public List<Employee> findAll() {
-        return (List<Employee>) employeeRepo.findAll();
+    public Page<Employee> findAll(Pageable pageable) {
+        return employeeRepo.findAll(pageable);
     }
 
     @Override
@@ -36,16 +38,11 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public List<Employee> sort(){
-        List<Employee> list = findAll();
-        list.sort(Comparator.comparing(Employee::getAge));
-        return list;
+        return employeeRepo.findAllSortByAgeASC();
     }
 
     @Override
     public List<Employee> reverse(){
-        List<Employee> list = findAll();
-        list.sort(Comparator.comparing(Employee::getAge));
-        Collections.reverse(list);
-        return list;
+       return employeeRepo.findAllSortByAgeDESC();
     }
 }
