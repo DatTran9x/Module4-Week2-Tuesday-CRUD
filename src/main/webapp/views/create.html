@@ -18,22 +18,32 @@
             </div>
             <div>
                 <table th:object="${employee}">
-                    <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Salary</th>
-                        <th>Branch</th>
-                    </tr>
-                    <tr>
-                        <td><input th:field="*{name}"></td>
-                        <td><input th:field="*{age}"></td>
-                        <td><input th:field="*{salary}"></td>
-                        <td>
-                            <select name="branchId">
-                                <option th:each="b, loop:${branch}" th:value="${b.id}" th:text="${b.name}"></option>
-                            </select>
-                        </td>
-                    </tr>
+                    <div>
+                        <tr>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Salary</th>
+                            <th>Branch</th>
+                        </tr>
+                        <tr>
+                            <td><input th:field="*{name}"></td>
+                            <td><input th:field="*{age}"></td>
+                            <td><input th:field="*{salary}"></td>
+                            <td>
+                                <select name="branchId">
+                                    <option th:each="b, loop:${branch}" th:value="${b.id}" th:text="${b.name}"></option>
+                                </select>
+                            </td>
+                        </tr>
+                    </div>
+                    <div>
+                        <tr>
+                            <td style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+                        </tr>
+                        <tr>
+                            <td style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></td>
+                        </tr>
+                    </div>
                 </table>
             </div>
             <div>

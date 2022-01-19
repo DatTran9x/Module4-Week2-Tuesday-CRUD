@@ -1,6 +1,9 @@
 package main.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Employee {
@@ -8,7 +11,10 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Pattern(regexp = "^[A-Z]\\w{4,19}",message = "Name must be from 5 to 20 characters long. First letter must be upper case.")
     private String name;
+    @Min(value = 18,message = "Age must be from 18 to 60")
+    @Max(value = 60,message = "Age must be from 18 to 60")
     private int age;
     private double salary;
 

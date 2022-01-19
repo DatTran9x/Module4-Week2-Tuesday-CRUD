@@ -4,13 +4,16 @@ import main.model.Branch;
 import main.model.Employee;
 import main.service.IBranchService;
 import main.service.IEmployeeService;
+import main.validate.Validate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -20,6 +23,9 @@ public class MainController {
 
     @Autowired
     IEmployeeService employeeService;
+
+    @Autowired
+    Validate validate;
 
     @GetMapping("/home")
     public ModelAndView home(@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "id") String option){
@@ -40,7 +46,15 @@ public class MainController {
     }
 
     @PostMapping("/create")
-    public ModelAndView add(@ModelAttribute Employee employee, @RequestParam int branchId){
+    public ModelAndView add(@Valid @ModelAttribute Employee employee, BindingResult bindingResult,@RequestParam int branchId){
+        validate.validate(employee,bindingResult);
+        if(bindingResult.hasFieldErrors()){
+            ModelAndView mav = new ModelAndView("/create");
+            List<Branch> list = branchService.findAll();
+            mav.addObject("employee",employee);
+            mav.addObject("branch",list);
+            return mav;
+        }
         Branch branch = new Branch();
         branch.setId(branchId);
         employee.setBranch(branch);
